@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        
+        <div>
+        
+        <div align="center" style="position:absolute; top: 200px; left: 38%; height: 500px;">
+        <h:form>
+            <p:growl id="growl" sticky="true" showDetail="true"/>
+            <p:panelGrid columns="2">
+            <p:outputLabel value="Takmicenje:"/>
+            <p:selectOneMenu value="#{delegat.izabranoTakmicenje}" required="true" filter="true">
+                <f:selectItems value="#{mojaTakmicenjaView}" var="t" itemLabel="#{t.sport} #{t.kategorija} #{t.disciplina}" itemValue="#{t.idTakmicenje}"/>
+            </p:selectOneMenu>
+            </p:panelGrid>
+            <br/>
+            <p:commandButton value="Razvrstaj po grupama" update="growl" action="#{delegat.razvrstajPoGrupama()}" />
+        </h:form>
+        <br/>
+        <br/>
+        <h:form>
+            <p:growl id="growl5" sticky="true"/>
+            <p:panelGrid columns="2">
+            <p:outputLabel value="Takmicenje:"/>
+            <p:selectOneMenu value="#{delegat.izabranoTakmicenje}" required="true" filter="true">
+                <f:selectItems value="#{mojaTakmicenjaView}" var="t" itemLabel="#{t.sport} #{t.kategorija} #{t.disciplina}" itemValue="#{t.idTakmicenje}"/>
+            </p:selectOneMenu> 
+            <p:outputLabel value="Format rezultata:"/>
+            <p:selectOneMenu value="#{delegat.izabraniFormatRezultata}" required="true" filter="true">
+                <f:selectItem itemLabel="tim1:tim2" itemValue="1" />
+                <f:selectItem itemLabel="vreme(dizina) sa 2 jedinice" itemValue="2" />
+                <f:selectItem itemLabel="vreme(dizina) sa 3 jedinice" itemValue="3" />
+                <f:selectItem itemLabel="gadjanje u 6 serija" itemValue="4" />
+            </p:selectOneMenu>
+            </p:panelGrid>
+            <br/>
+            <p:commandButton update="growl5" value="Unesi rezultate" action="#{delegat.novaStrana()}" />
+        </h:form>
+        
+        </div>
+        
+        <div style="position: fixed; top: 0px; left: 0px; width: 100%">
+            <p:graphicImage style="width: 100%" value="resources/header.jpg"/>
+        </div>
+              
+        <div style="background-color:#1bb03c; position: fixed; bottom: 0px; left: 0px; width: 100%; height: 50px">
+        <h:form>
+            <p:dock position="bottom">
+                <p:menuitem value="Promeni lozinku" icon="resources/change.png" action="change_password"/>
+                <p:menuitem value="Logout" icon="resources/logout.png" action="#{login.logout()}"/>
+            </p:dock>
+        </h:form>
+        </div>
+        
+        </div>
+        
+    </h:body>
+</html>
+

@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        
+        <div>
+        
+        <div align="center" style="position:absolute; top: 200px; height: 1200px;">
+            <h:form id="form1">
+                <p:growl id="growl33" sticky="true"/>
+                <p:dataTable id="dt1" var="m" value="#{mecevi}" 
+                paginator="true" rows="8"
+                paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                rowsPerPageTemplate="6,8,10,16"
+                style="width: 98%">
+                 
+                    <p:column headerText="Faza">
+                    <p:outputLabel value="#{m.faza}" />
+                </p:column>
+                    
+                <p:column headerText="Ucesnik1">
+                    <p:outputLabel value="#{m.nazivUcesnika1}" />
+                </p:column>
+ 
+                <p:column headerText="Ucesnik2">
+                    <p:outputLabel value="#{m.nazivUcesnika2}" />
+                </p:column>
+ 
+                <p:column headerText="Datum">
+                    <p:inputText value="#{m.datum}" />
+                </p:column>
+ 
+                <p:column headerText="Vreme">
+                    <p:inputText value="#{m.vreme}" />
+                </p:column>
+                    
+                <p:column headerText="Lokacija">
+                    <p:inputText value="#{m.lokacija}" />
+                </p:column>
+                   
+                    <p:column headerText="Potvrdite vreme i mesto dogadjaja">
+                        <p:commandButton id="dugme1" value="potvrdi" update=":form1:growl33 dt1" disabled="#{m.zavrseno==1}"  action="#{delegat_rezultat.proveriRaspored(m)}" />   
+                    </p:column>
+                    
+                    <p:column  headerText="Poeni ucesnika1">
+                        <p:inputText value="#{m.rezultat1}" />
+                </p:column>
+                    <p:column  headerText="Poeni ucesnika2">
+                    <p:inputText value="#{m.rezultat2}" />
+                </p:column>
+                    
+                    <p:column id="d2" headerText="Potvrdite rezultat">
+                        <p:commandButton id="dugme2" value="potvrdi" update=":form1:growl33 dt1"  action="#{delegat_rezultat.unesiRezultat(m)}" />
+                    </p:column>
+                    
+                </p:dataTable>
+            </h:form>
+        </div>
+            
+        <div style="position: fixed; top: 0px; left: 0px; width: 100%">
+            <p:graphicImage style="width: 100%" value="resources/header.jpg"/>
+        </div>
+              
+        <div style="background-color:#1bb03c; position: fixed; bottom: 0px; left: 0px; width: 100%; height: 50px">
+        <h:form>
+            <p:dock position="bottom">
+                <p:menuitem value="Nazad" icon="resources/nazad.png" action="delegat_home"/>
+                <p:menuitem value="Promeni lozinku" icon="resources/change.png" action="change_password"/>
+                <p:menuitem value="Logout" icon="resources/logout.png" action="#{login.logout()}"/>
+            </p:dock>
+        </h:form>
+        </div>    
+            
+        </div>
+            
+    </h:body>
+</html>
+

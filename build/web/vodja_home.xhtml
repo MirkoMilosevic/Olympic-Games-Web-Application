@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        
+        <div>
+        
+            <div align="center" style="position:absolute; top: 200px; height:2000px">
+                <h:form id="form1">
+                <p:growl id="growl" showDetail="true" sticky="true" />
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="Ime"/>
+                    <p:inputText value="#{vodja.sportista.ime}" required="true" requiredMessage="Obavezno polje!" id="ime" style="background-color: #165ddd; color: yellow"/>
+                   
+                    <p:outputLabel value="Prezime"/>
+                    <p:inputText value="#{vodja.sportista.prezime}" required="true" requiredMessage="Obavezno polje!" id="prezime" style="background-color: #165ddd; color: yellow"/>
+                    
+                    <p:outputLabel value="Sport"/>
+                    <p:selectOneListbox value="#{vodja.sport}" scrollHeight="100" id="sport" required="true" requiredMessage="Obavezno polje!" filter="true" >
+                        <p:ajax event="click" update="form1:dis" listener="#{vodja.disciplineListener()}"/>
+                        <f:selectItems value="#{login.sportovi}" var="s" itemLabel="#{s.naziv} #{s.kategorija}" itemValue="#{s.id}"/>
+                    </p:selectOneListbox>
+                    
+                    <p:outputLabel value="Disciplina"/>
+                    <p:selectCheckboxMenu id="dis" value="#{vodja.discipline}"  label="Izaberi" filter="true">
+                        <f:selectItems value="#{vodja.dis}" var="d" itemLabel="#{d.naziv}" itemValue="#{d.id}"/>
+                    </p:selectCheckboxMenu>
+                </p:panelGrid>
+                <br/>
+                <p:commandButton value="Dodaj sportistu" action="#{vodja.dodajSportistu()}" update="growl"/>
+            </h:form>
+       <br/>
+       <br/>
+            <h:form>
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="Sport"/>
+                    <p:selectOneListbox value="#{ekipa.sport}" scrollHeight="100" id="ekipasport" required="true" requiredMessage="Obavezno polje!" filter="true" >
+                        <p:ajax event="click" update="igraci" listener="#{ekipa.igraciListener()}"/>
+                        <f:selectItems value="#{login.sportovi}" var="s" itemLabel="#{s.naziv} #{s.kategorija}" itemValue="#{s.id}"/>
+                    </p:selectOneListbox>
+                    <p:outputLabel value="Igraci"/>
+                    <p:selectCheckboxMenu id="igraci" value="#{ekipa.sportisti}"  label="Izaberi" filter="true">
+                        
+                        <f:selectItems value="#{ekipa.pom}" var="i" itemLabel="#{i.ime} #{i.prezime}" itemValue="#{i.id}"/>
+                    </p:selectCheckboxMenu>
+                </p:panelGrid>
+                <br/>
+                <p:commandButton value="Novi tim" update=":form1:growl" action="#{ekipa.napraviTim()}"/>
+            </h:form>
+        <br/>
+        <br/>
+            <h:form>
+                <p:commandButton value="Azuriraj ukupan broj sportista" actionListener="#{vodja_pregled.prebrojSportiste()}" update="ukupno pregled"/>
+                <br/>
+                <p:outputLabel value="Ukupan broj sportista je #{vodja_pregled.brojSportista}" id="ukupno" />
+                <br/>
+                <p:dataTable id="pregled" var="sp" value="#{vodja_pregled.sportPregled}" style="width: 60%"
+                 paginator="true" rows="5"
+                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                 rowsPerPageTemplate="5,10,20">
+                    <p:column headerText="Sport">
+                        <h:outputText value="[#{sp.sport} #{sp.kategorija}]" />
+                    </p:column>
+                    <p:column headerText="Broj sportista">
+                        <h:outputText value="[#{sp.n}]" />
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        <br/>
+        <br/>
+        <h:form>
+            <p:commandButton value="Pregledaj sportiste" action="#{vodja_pregled.pregledSportova(login.korisnik.nacionalnost)}"/>
+        </h:form>
+        
+            </div>
+            
+        <div style="position: fixed; top: 0px; left: 0px; width: 100%">
+            <p:graphicImage style="width: 100%" value="resources/header.jpg"/>
+        </div>
+              
+        <div style="background-color:#1bb03c; position: fixed; bottom: 0px; left: 0px; width: 100%; height: 50px">
+        <h:form>
+            <p:dock position="bottom">
+                <p:menuitem value="Promeni lozinku" icon="resources/change.png" action="change_password"/>
+                <p:menuitem value="Logout" icon="resources/logout.png" action="#{login.logout()}"/>
+            </p:dock>
+        </h:form>
+        </div>
+            
+        </div>
+        
+    </h:body>
+</html>
+
